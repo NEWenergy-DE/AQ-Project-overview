@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>DC Pipeline Germany</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Data Center Pipeline · Germany</h1>
+    <div class="src" id="src"></div>
+    <div class="actions">
+      <label class="btn" for="file" tabindex="0">Load file</label>
+      <input id="file" type="file" accept=".csv,.xlsx,.xlsm,.xls" hidden>
+      <button class="primary" id="exportBtn" type="button">Export PowerPoint</button>
+    </div>
+  </header>
+  <section class="kpis" id="kpis" aria-label="Capacity by status"></section>
+  <div class="main">
+    <aside class="panel filters" aria-label="Filters">
+      <div class="fl"><span class="lbl">View</span>
+        <div class="seg" role="group"><button type="button" id="vProj" aria-pressed="true">Projects</button><button type="button" id="vClu" aria-pressed="false">Clusters</button></div></div>
+      <div class="fl"><label for="q">Search</label><input id="q" type="search" placeholder="Project, promoter, city"></div>
+      <div class="fl"><span class="lbl">Status</span><div id="statusBox" class="fl"></div></div>
+      <div class="fl"><label for="fState">Bundesland</label><select id="fState"></select></div>
+      <div class="fl"><label for="fType">Data center type</label><select id="fType"></select></div>
+      <div class="fl"><label for="fOwner">Owner country</label><select id="fOwner"></select></div>
+      <div class="fl"><label for="fMin">Minimum size: <span id="minOut">0</span> MW</label><input id="fMin" type="range" min="0" max="500" step="10" value="0"></div>
+      <label class="chk"><input type="checkbox" id="fStale"> Hide rows not verified in 180 days</label>
+      <label class="chk"><input type="checkbox" id="fDeck"> Only rows marked for the deck</label>
+      <button type="button" id="reset">Reset filters</button>
+    </aside>
+    <div class="panel mapwrap"><div id="map" aria-label="Map of data center projects"></div><div class="legend" id="legend"></div></div>
+    <aside class="panel side" id="side"></aside>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <h3>Export PowerPoint</h3>
+  <p>Builds a 16:9 deck from the projects currently shown: map with capacity bubbles per cluster, the project table grouped by status, and a stacked chart by cluster and phase. Everything stays editable in PowerPoint.</p>
+  <div class="fl"><label for="tTitle">Slide title</label><input id="tTitle" type="text" value="Projects pipeline Germany"></div>
+  <div class="fl"><label for="tSource">Source line</label><input id="tSource" type="text" value="Source: internal data center pipeline database"></div>
+  <div class="msg" id="exportMsg"></div>
+  <div class="actions"><button type="button" id="cancelExport">Cancel</button><button type="button" class="primary" id="doExport">Download .pptx</button></div>
+</div>
+<div class="drop" id="drop" hidden>Drop the Excel file to load it</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="lib/pptxgen.bundle.js"></script>
+<script src="deck.js"></script>
+<script src="germany_outline.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
