@@ -121,7 +121,7 @@ function drawMap(rows){
   rows.slice().sort(function(a, b){ return total(b) - total(a); }).forEach(function(r){
     var lat = num(r.Latitude), lon = num(r.Longitude); if (!lat || !lon) return;
     var sel = state.selected === r;
-    var m = L.circleMarker([lat, lon], { radius: Math.max(5, 26 * Math.sqrt(total(r) / max)), color: sel ? css("--gold") : "#fff", weight: sel ? 3 : 1,
+    var m = L.circleMarker([lat, lon], { radius: Math.max(5, 26 * Math.sqrt(total(r) / max)), color: sel ? css("--sel") : "#fff", weight: sel ? 3 : 1,
       fillColor: css(stVar(r.Status)), fillOpacity: .88 }).addTo(layer);
     m.bindTooltip("<b>" + esc(r.Project_Name || r.Promoter) + "</b><br>" + esc(r.City || "") + " · " + fmtMW(total(r)) + " MW · " + esc(r.Status));
     m.on("click", function(){ select(r); });
@@ -136,8 +136,8 @@ function drawSide(rows){
   var sorted = rows.slice().sort(function(a, b){ return total(b) - total(a); });
   side.innerHTML = '<div class="head"><b>Projects</b><span>' + rows.length + ' shown · sorted by MW</span></div><div class="list">' +
     sorted.map(function(r, i){
-      return '<div class="row" tabindex="0" data-i="' + state.rows.indexOf(r) + '" style="--c:var(' + stVar(r.Status) + ')"><i></i><span class="n">' + esc(r.Project_Name || r.Promoter) +
-        '</span><span class="m">' + fmtMW(total(r)) + ' MW</span><span class="s">' + esc([r.Promoter, r.City, r.Status].filter(Boolean).join(" · ")) + '</span></div>';
+      return '<div class="row" tabindex="0" data-i="' + state.rows.indexOf(r) + '" style="--c:var(' + stVar(r.Status) + ')"><span class="ix">' + (i < 9 ? "0" : "") + (i + 1) + '.</span><span class="n">' + esc(r.Project_Name || r.Promoter) +
+        '</span><span class="m">' + fmtMW(total(r)) + ' MW</span><span class="s"><i></i>' + esc([r.Promoter, r.City, r.Status].filter(Boolean).join(" · ")) + '</span></div>';
     }).join("") + (rows.length ? "" : '<p class="msg" style="padding:14px">No projects match these filters.</p>') + '</div>';
   side.querySelectorAll(".row").forEach(function(el){
     var go = function(){ select(state.rows[+el.dataset.i]); };
@@ -167,8 +167,8 @@ function select(r){ state.selected = r; if (map && num(r.Latitude)) map.flyTo([n
 /* ---------- KPIs, status filter, legend ---------- */
 function drawKpis(rows){
   var sum = function(k){ return rows.reduce(function(a, r){ return a + num(r[k]); }, 0); }, tot = rows.reduce(function(a, r){ return a + total(r); }, 0);
-  $("kpis").innerHTML = KPI.map(function(k){ return '<div class="kpi" style="--c:var(' + k[2] + ')"><span>' + k[0] + '</span><b>' + fmtMW(sum(k[1])) + ' MW</b></div>'; }).join("") +
-    '<div class="kpi" style="--c:var(--gold)"><span>Total pipeline</span><b>' + fmtCap(tot) + '</b><small>' + rows.length + ' projects</small></div>';
+  $("kpis").innerHTML = KPI.map(function(k){ return '<div class="kpi" style="--c:var(' + k[2] + ')"><b>' + fmtMW(sum(k[1])) + '<u>MW</u></b><span><i></i>' + k[0] + '</span></div>'; }).join("") +
+    '<div class="kpi total"><b>' + fmtCap(tot) + '</b><span>Total pipeline · ' + rows.length + ' projects</span></div>';
 }
 function drawStatus(){
   var counts = {}; state.rows.forEach(function(r){ counts[r.Status] = (counts[r.Status] || 0) + 1; });
