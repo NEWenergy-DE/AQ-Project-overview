@@ -6,23 +6,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
-  <header>
-    <h1>Data Center Pipeline · Germany</h1>
+<div class="page">
+  <header class="top wrap">
+    <h1>Data Center Pipeline <span>·</span> Germany</h1>
     <div class="src" id="src"></div>
     <div class="actions">
       <label class="btn" for="file" tabindex="0">Load file</label>
       <input id="file" type="file" accept=".csv,.xlsx,.xlsm,.xls" hidden>
-      <button class="primary" id="exportBtn" type="button">Export PowerPoint</button>
+      <button class="cta" id="exportBtn" type="button"><span class="arr"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></span><span class="txt">Export PowerPoint</span></button>
     </div>
   </header>
-  <section class="kpis" id="kpis" aria-label="Capacity by status"></section>
+  <section class="kpis wrap" id="kpis" aria-label="Capacity by status"></section>
   <div class="main">
     <aside class="panel filters" aria-label="Filters">
+      <h2 class="ttl">Filter by</h2>
       <div class="fl"><span class="lbl">View</span>
         <div class="seg" role="group"><button type="button" id="vProj" aria-pressed="true">Projects</button><button type="button" id="vClu" aria-pressed="false">Clusters</button></div></div>
       <div class="fl"><label for="q">Search</label><input id="q" type="search" placeholder="Project, promoter, city"></div>
@@ -46,7 +49,7 @@
   <div class="fl"><label for="tTitle">Slide title</label><input id="tTitle" type="text" value="Projects pipeline Germany"></div>
   <div class="fl"><label for="tSource">Source line</label><input id="tSource" type="text" value="Source: internal data center pipeline database"></div>
   <div class="msg" id="exportMsg"></div>
-  <div class="actions"><button type="button" id="cancelExport">Cancel</button><button type="button" class="primary" id="doExport">Download .pptx</button></div>
+  <div class="actions"><button type="button" id="cancelExport">Cancel</button><button type="button" class="cta" id="doExport"><span class="arr"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></span><span class="txt">Download .pptx</span></button></div>
 </div>
 <div class="drop" id="drop" hidden>Drop the Excel file to load it</div>
 
